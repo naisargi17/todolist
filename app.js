@@ -1,17 +1,20 @@
-//jshint esversion:6
+
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const app = express();
+
 const _ =require("lodash");
+
+const app = express();
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb+srv://naisadmin:admin123@cluster0.evdl7ay.mongodb.net/todolistDB",)
 
+mongoose.connect('mongodb://127.0.0.1:27017/todolistDB');
 const itemSchema = {
   name :String
 };
@@ -54,7 +57,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/:customListName",function(req,res){
-  const customListName =_.capitalize(req.params.customizelist);
+  const customListName =_.capitalize(req.params.customListName);
 
   List.findOne({name :customListName}).then(function(foundList){
     if (!foundList){
